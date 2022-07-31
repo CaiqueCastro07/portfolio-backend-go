@@ -1,13 +1,23 @@
-FROM golang:1.18-bullseye
+# Add Maintainer Info
+LABEL maintainer="Rajeev Singh <rajeevhub@gmail.com>"
 
-RUN go install github.com/CaiqueCastro07/portfolio-backend-go@latest
+# Set the Current Working Directory inside the container
+WORKDIR /app
 
-ENV GO111MODULE=on
-ENV GOFLAGS=-mod=vendor
+# Copy go mod and sum files
+COPY go.mod go.sum ./
 
-ENV APP_HOME /go/src/mathapp
-RUN mkdir -p "$APP_HOME"
+# Download all dependancies. Dependencies will be cached if the go.mod and go.sum files are not changed
+RUN go mod download
 
-WORKDIR "$APP_HOME"
+# Copy the source from the current directory to the Working Directory inside the container
+COPY . .
+
+# Build the Go app
+RUN go build -o main .
+
+# Expose port 8080 to the outside world
 EXPOSE 3002
-CMD ["go","run","."]
+
+# Run the executable
+CMD ["./main"]
