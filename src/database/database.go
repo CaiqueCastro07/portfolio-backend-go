@@ -17,13 +17,11 @@ var Ctx = context.TODO()
 
 func InitDatabase() {
 
-	/*
-		if len(os.Getenv("DB")) == 0 {
-			log.Fatal("Configure a variável de ambiente com a uri do mongoDB antes de iniciar.")
-		}
-	*/
+	if len(os.Getenv("DB")) == 0 {
+		log.Fatal("Configure a variável de ambiente com a uri do mongoDB antes de iniciar.")
+	}
 
-	clientOptions := options.Client().ApplyURI("mongodb+srv://caique:214040@cluster0.71riqmd.mongodb.net/portfolio?retryWrites=true&w=majority")
+	clientOptions := options.Client().ApplyURI(os.Getenv("DB"))
 	client, err := mongo.Connect(Ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
