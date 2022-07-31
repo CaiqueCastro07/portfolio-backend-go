@@ -1,15 +1,10 @@
-version: '3'
+version: '2'
 
-# Define services
 services:
-
-  # App Service
-  app:
-    # Configuration for building the docker image for the service
-    build:
-      context: . # Use an image built from the specified dockerfile in the current directory.
-      dockerfile: Dockerfile
-    ports:
-      - "3002:3002" # Forward the exposed port 8080 on the container to port 8080 on the host machine
-    restart: unless-stopped
-    
+  api:
+    container_name: portfolio-go
+    image: portfolio-go
+    build: .
+    command: go run .
+    ports: 
+      - "3002:3002"

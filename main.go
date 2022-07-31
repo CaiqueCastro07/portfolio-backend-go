@@ -31,6 +31,6 @@ func main() {
 
 	router.POST("/goapi/message", controllers.RegisterMessage)
 
-	router.Run("localhost:3002")
+	router.Run("0.0.0.0:3002") // change to localhost:3002 when running locally
 
 }
