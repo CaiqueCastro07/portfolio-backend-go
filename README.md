@@ -5,7 +5,7 @@
 ```
 Create a env variable called DB with your MongoURI
 
-Replace the "0.0.0.0:3002" in main.go file to "localhost:3002" to run it locally
+Replace the "0.0.0.0:3002" in main.go file with "localhost:3002" to run it locally
 
 go get
 
