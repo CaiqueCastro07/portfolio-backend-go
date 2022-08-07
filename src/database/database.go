@@ -8,6 +8,7 @@ import (
 
 	"github.com/urfave/cli/v2"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -17,8 +18,12 @@ var Ctx = context.TODO()
 
 func InitDatabase() {
 
+	if err := godotenv.Load(".env"); err != nil {
+		log.Fatal("Configure a variável de ambiente .env antes de iniciar.")
+	}
+
 	if len(os.Getenv("DB")) == 0 {
-		log.Fatal("Configure a variável de ambiente com a uri do mongoDB antes de iniciar.")
+		log.Fatal("Configure a variável de ambiente com a uri do mongoDB 'key = DB' antes de iniciar.")
 	}
 
 	clientOptions := options.Client().ApplyURI(os.Getenv("DB"))
