@@ -1,6 +1,9 @@
 package main
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/CaiqueCastro07/portfolio-backend-go/src/controllers"
 	"github.com/CaiqueCastro07/portfolio-backend-go/src/database"
 
@@ -28,6 +31,11 @@ func main() {
 
 	router := gin.New()
 	router.Use(CORS())
+
+	router.GET("/goapi/", func(c *gin.Context) {
+		c.IndentedJSON(http.StatusOK, map[string]interface{}{
+			"status": 200, "online": true, "integration": "Portfolio Golang", "time": time.Now()})
+	})
 
 	router.POST("/goapi/message", controllers.RegisterMessage)
 
