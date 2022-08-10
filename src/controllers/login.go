@@ -51,5 +51,5 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, helpers.Response{http.StatusOK, "Usuário autorizado", false, map[string]string{}})
+	c.IndentedJSON(http.StatusOK, helpers.Response{http.StatusOK, "Usuário autorizado", false, credentials.User})
 }
