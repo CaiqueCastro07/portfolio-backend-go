@@ -37,6 +37,10 @@ func main() {
 			"status": 200, "online": true, "integration": "Portfolio Golang", "time": time.Now()})
 	})
 
+	router.POST("/goapi/login", controllers.Login)
+
+	router.POST("/goapi/register", controllers.Register)
+
 	router.POST("/goapi/message", controllers.RegisterMessage)
 
 	router.Run("0.0.0.0:3002") // change to localhost:3002 when running locally

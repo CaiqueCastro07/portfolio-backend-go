@@ -13,7 +13,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var Collection *mongo.Collection
+var MessagesCollection *mongo.Collection
+var TasksCollection *mongo.Collection
 var Ctx = context.TODO()
 
 func InitDatabase() {
@@ -37,7 +38,8 @@ func InitDatabase() {
 		log.Fatal(err)
 	}
 
-	Collection = client.Database("portfolio").Collection("messages")
+	MessagesCollection = client.Database("portfolio").Collection("messages")
+	TasksCollection = client.Database("portfolio").Collection("tasks")
 
 	app := &cli.App{
 		Name:     "tasker",

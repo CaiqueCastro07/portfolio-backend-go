@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -69,5 +70,40 @@ func ValidateMessage(message string) (bool, string) {
 	}
 
 	return true, ""
+
+}
+
+func DecodePassword(password map[int]int, r string) (bool, string) {
+
+	reverseR := ""
+
+	for i, _ := range r {
+		reverseR += r[len(r)-(i+1) : len(r)-(i)]
+	}
+
+	decodeR, err := strconv.Atoi(reverseR)
+
+	if err != nil {
+		return false, ""
+	}
+
+	decodeR = decodeR - 117
+
+	fmt.Println(decodeR)
+
+	decodedPas := ""
+
+	for i := 0; i < len(password); i++ {
+
+		password[i] += decodeR
+		decodedPas += string(password[i])
+
+	}
+
+	if len(decodedPas) != len(password) {
+		return false, ""
+	}
+
+	return true, decodedPas
 
 }
