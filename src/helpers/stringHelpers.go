@@ -1,11 +1,14 @@
 package helpers
 
 import (
-	"fmt"
+	"log"
+	"os"
 	"regexp"
 	"strings"
 
 	"strconv"
+
+	"github.com/joho/godotenv"
 
 	valid "github.com/asaskevich/govalidator"
 )
@@ -75,7 +78,17 @@ func ValidateMessage(message string) (bool, string) {
 
 func DecodePassword(password map[int]int, r string) (bool, string) {
 
+	if err := godotenv.Load(".env"); err != nil {
+		log.Fatal("Configure a variável de ambiente .env antes de iniciar.")
+	}
+
+	if len(os.Getenv("SECRET_REDUCE")) == 0 {
+		log.Fatal("Configure a variável de ambiente com o número SECRET_REDUCE antes de iniciar.")
+	}
+
 	reverseR := ""
+
+	secretReduce, _ := strconv.Atoi(os.Getenv("SECRET_REDUCE"))
 
 	for i, _ := range r {
 		reverseR += r[len(r)-(i+1) : len(r)-(i)]
@@ -87,17 +100,13 @@ func DecodePassword(password map[int]int, r string) (bool, string) {
 		return false, ""
 	}
 
-	decodeR = decodeR - 117
-
-	fmt.Println(decodeR)
+	decodeR = decodeR - secretReduce
 
 	decodedPas := ""
 
 	for i := 0; i < len(password); i++ {
-
 		password[i] += decodeR
 		decodedPas += string(password[i])
-
 	}
 
 	if len(decodedPas) != len(password) {
